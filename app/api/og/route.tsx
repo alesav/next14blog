@@ -1,20 +1,20 @@
-import { OgImage } from "@/components/og/og-image";
-import { ImageResponse } from "next/server";
-import {ogImageSchema} from "@/lib/validations";
+import { SharedOgImage } from "@/components/shared";
+import { ogImageSchema } from "@/lib/validation/og";
+import { ImageResponse } from "next/og";
 
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 
 export const runtime = "edge";
 
-const jetBrainMonoBold = fetch(
-  new URL("../../../public/fonts/JetBrainsMono-Bold.ttf", import.meta.url)
+const interBold = fetch(
+  new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url),
 ).then((res) => res.arrayBuffer());
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(`${req.url}`);
-    const fontBold = await jetBrainMonoBold;
+    const fontBold = await interBold;
 
     const { title, subTitle, tags, slug } = ogImageSchema.parse({
       title: searchParams.get("title"),
@@ -24,18 +24,26 @@ export async function GET(req: Request) {
     });
 
     return new ImageResponse(
-      <OgImage title={title} subTitle={subTitle} tags={tags} slug={slug} />,
+      (
+        <SharedOgImage
+          title={title}
+          subTitle={subTitle}
+          tags={tags}
+          slug={slug}
+        />
+      ),
       {
         width: 1200,
         height: 630,
         fonts: [
           {
-            name: "JetBrainMono",
+            name: "Inter",
             data: fontBold,
+            weight: 700,
             style: "normal",
           },
         ],
-      }
+      },
     );
   } catch (error) {
     return new Response(`Failed to generate image`, {

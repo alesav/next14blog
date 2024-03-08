@@ -1,43 +1,37 @@
+import { TailwindIndicator } from "@/components/main";
+import { seoData } from "@/config/root/seo";
+import { getUrl } from "@/lib/utils";
 import "@/styles/tailwind.css";
-import TwIndicator from "@/components/shared/tw-indicator";
-import { metaData } from "@/config/meta";
-import { cn, getOgImageUrl, getUrl } from "@/lib/utils";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
-import { JetBrains_Mono, Manrope } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-const fontSans = JetBrains_Mono({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const fontMono = Manrope({
-  subsets: ["cyrillic"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: {
-    template: "%s | Ub.Cafe",
-    default: metaData.title,
-    absolute: metaData.absoluteTitle,
+    template: "%s | Next.js Blog",
+    default: seoData.title,
+    absolute: seoData.absoluteTitle,
   },
-  generator: metaData.author.name,
-  applicationName: metaData.title,
-  description: metaData.description,
+  generator: seoData.author.name,
+  applicationName: seoData.title,
+  description: seoData.description,
   referrer: "origin-when-cross-origin",
-  keywords: metaData.keywords,
+  keywords: seoData.keywords,
   authors: [
     {
-      name: metaData.author.name,
-      url: metaData.author.twitterUrl,
+      name: seoData.author.name,
+      url: seoData.author.twitterUrl,
     },
   ],
-  creator: metaData.author.name,
-  publisher: metaData.author.name,
+  creator: seoData.author.name,
+  publisher: seoData.author.name,
   formatDetection: {
     email: false,
     address: false,
@@ -47,13 +41,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-    viewportFit: "cover",
-  },
+  // viewport: {
+  //   width: "device-width",
+  //   initialScale: 1,
+  //   maximumScale: 1,
+  //   userScalable: false,
+  //   viewportFit: "cover",
+  // },
   robots: {
     index: false,
     follow: true,
@@ -97,35 +91,30 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: getUrl(),
-    title: metaData.title,
-    description: metaData.description,
-    siteName: metaData.title,
+    title: seoData.title,
+    description: seoData.description,
+    siteName: seoData.title,
     images: [
       {
-        url: getOgImageUrl(
-          metaData.title,
-          metaData.subTitle,
-          metaData.tags,
-          "/",
-        ),
+        // url: getOgImageUrl(metaData.title, metaData.subTitle, metaData.tags, '/'),
+        url: `${getUrl()}/images/opengraph-image.png`,
         width: 1200,
         height: 630,
-        alt: metaData.title,
+        alt: seoData.title,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: metaData.ogTitle,
-    description: metaData.description,
-    images: [
-      getOgImageUrl(metaData.title, metaData.subTitle, metaData.tags, "/"),
-    ],
-    creator: metaData.author.twitterAddress,
+    title: seoData.ogTitle,
+    description: seoData.description,
+    // images: [getOgImageUrl(metaData.title, metaData.subTitle, metaData.tags, '/')],
+    images: `${getUrl()}/images/twitter-image.png`,
+    creator: seoData.author.twitterAddress,
   },
   appleWebApp: {
     capable: true,
-    title: metaData.title,
+    title: seoData.title,
     statusBarStyle: "black-translucent",
   },
 };
@@ -139,12 +128,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn("layout", fontSans.variable, fontMono.variable)}>
+      <body className={fontSans.variable}>
         <div className="bg-white font-sans">
           {children}
           <VercelAnalytics />
           <Toaster position="top-center" />
-          <TwIndicator />
+          <TailwindIndicator />
         </div>
       </body>
     </html>

@@ -36,27 +36,64 @@ export interface Database {
     Tables: {
       authors: {
         Row: {
-          created_at: string | null
+          created_at: string
+          email: string | null
           id: string
           image: string | null
           name: string | null
           title: string | null
+          updated_at: string | null
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
+          email?: string | null
           id?: string
           image?: string | null
           name?: string | null
           title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          image?: string | null
+          name?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      bookmarks: {
+        Row: {
+          created_at: string | null
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string | null
           id?: string
-          image?: string | null
-          name?: string | null
-          title?: string | null
+          user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_id_fkey"
+            columns: ["id"]
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookmarks_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       categories: {
         Row: {
@@ -84,38 +121,95 @@ export interface Database {
           comment: string | null
           created_at: string | null
           id: string
-          image: string | null
-          post_slug: string | null
-          username: string | null
+          post_id: string | null
+          user_id: string | null
         }
         Insert: {
           comment?: string | null
           created_at?: string | null
           id?: string
-          image?: string | null
-          post_slug?: string | null
-          username?: string | null
+          post_id?: string | null
+          user_id?: string | null
         }
         Update: {
           comment?: string | null
           created_at?: string | null
           id?: string
-          image?: string | null
-          post_slug?: string | null
-          username?: string | null
+          post_id?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "comments_post_slug_fkey"
-            columns: ["post_slug"]
+            foreignKeyName: "comments_post_id_fkey"
+            columns: ["post_id"]
             referencedRelation: "posts"
-            referencedColumns: ["slug"]
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      drafts: {
+        Row: {
+          author_id: string | null
+          category_id: string | null
+          content: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image: string | null
+          slug: string | null
+          status: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          slug?: string | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          author_id?: string | null
+          category_id?: string | null
+          content?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image?: string | null
+          slug?: string | null
+          status?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drafts_author_id_fkey"
+            columns: ["author_id"]
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "drafts_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
           }
         ]
       }
       posts: {
         Row: {
-          audio: string | null
           author_id: string | null
           category_id: string | null
           content: string | null
@@ -123,14 +217,12 @@ export interface Database {
           description: string | null
           id: string
           image: string | null
-          quote: string | null
+          published: boolean | null
           slug: string | null
           title: string | null
           updated_at: string | null
-          year: string | null
         }
         Insert: {
-          audio?: string | null
           author_id?: string | null
           category_id?: string | null
           content?: string | null
@@ -138,14 +230,12 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
-          quote?: string | null
+          published?: boolean | null
           slug?: string | null
           title?: string | null
           updated_at?: string | null
-          year?: string | null
         }
         Update: {
-          audio?: string | null
           author_id?: string | null
           category_id?: string | null
           content?: string | null
@@ -153,17 +243,16 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string | null
-          quote?: string | null
+          published?: boolean | null
           slug?: string | null
           title?: string | null
           updated_at?: string | null
-          year?: string | null
         }
         Relationships: [
           {
             foreignKeyName: "posts_author_id_fkey"
             columns: ["author_id"]
-            referencedRelation: "authors"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
           {

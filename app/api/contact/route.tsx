@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import Email from "@/components/contact/email";
+import Email from "@/components/main/pages/email";
 import { smtpEmail, transporter } from "@/lib/nodemailer";
 import { render } from "@react-email/components";
+import { NextRequest, NextResponse } from "next/server";
 import * as z from "zod";
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const { name, email, message } = body;
 
   const emailHtml = render(
-    <Email name={name} email={email} message={message} />
+    <Email name={name} email={email} message={message} />,
   );
 
   const options = {

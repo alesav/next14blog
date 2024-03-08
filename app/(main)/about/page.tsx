@@ -1,10 +1,10 @@
-import ContactForm from "@/components/about/contact-form";
+import MainAboutPage from "@/components/main/pages/main-about-page";
 import React from "react";
 
-export default function AboutPage() {
+export default function About() {
   return (
     <>
-      <ContactForm />
+      <MainAboutPage />
     </>
   );
 }

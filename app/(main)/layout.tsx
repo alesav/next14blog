@@ -1,25 +1,24 @@
-import SiteFooter from "@/components/site/site-footer";
-import SiteGrid from "@/components/site/site-grid";
-import SiteHeader from "@/components/site/site-header";
-import SiteForm from "@/components/site/site-form";
+import {
+  MainBanner,
+  MainFooter,
+  MainGrid,
+  MainHeader,
+} from "@/components/main";
+import { ReactNode } from "react";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <SiteHeader />
-      <SiteGrid>
-        <div className="py-10 min-h-full">
+      <MainBanner />
+      <MainHeader />
+      <MainGrid>
+        <div className="min-h-full py-10">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-3xl">{children}</div>
-            <SiteForm />
           </div>
         </div>
-      </SiteGrid>
-      <SiteFooter />
+      </MainGrid>
+      <MainFooter />
     </>
   );
 }

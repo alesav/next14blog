@@ -1,12 +1,13 @@
-import SiteLoadingItem from "@/components/site/site-loading-item";
+import MainPostItemDesktopLoading from "@/components/main/post/loading/main-post-item-desktop-loading";
+import MainPostItemMobileLoading from "@/components/main/post/loading/main-post-item-mobile-loading";
 import React from "react";
 
 const Loading = () => {
   return (
     <>
-      <SiteLoadingItem />
-      <SiteLoadingItem />
-      <SiteLoadingItem />
+      {/* LoadingItems */}
+      <MainPostItemDesktopLoading />
+      <MainPostItemMobileLoading />
     </>
   );
 };

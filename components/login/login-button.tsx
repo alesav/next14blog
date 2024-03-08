@@ -1,12 +1,12 @@
 "use client";
 
-import LoginIcon from "@/components/icons/login";
-import LoginSection from "@/components/login/login-section";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import React from "react";
+import { LoginIcon } from "@/icons";
+import { useState } from "react";
+import { default as LoginSection } from "./login-section";
 
 const LoginButton = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

@@ -1,10 +1,10 @@
-import PostDetailLoading from "@/components/post/post-detail-loading";
+import { DetailPostLoading } from "@/components/detail/post";
 import React from "react";
 
 const Loading = () => {
   return (
     <>
-      <PostDetailLoading />
+      <DetailPostLoading />
     </>
   );
 };
